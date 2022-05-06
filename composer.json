@@ -1,0 +1,17 @@
+{
+    "name": "goodhands/copyleaks-demo",
+    "description": "A simple application showcasing copyleaks webhooks, file submission and scanning features",
+    "type": "project",
+    "require": {
+        "copyleaks/php-plagiarism-checker": "^3.1",
+        "vlucas/phpdotenv": "^5.4",
+        "oscarotero/env": "^2.1"
+    },
+    "authors": [
+        {
+            "name": "Samuel Olaegbe",
+            "email": "olaegbesamuel@gmail.com"
+        }
+    ],
+    "minimum-stability": "alpha"
+}
