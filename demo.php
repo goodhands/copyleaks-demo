@@ -50,6 +50,7 @@ class PlagiarismChecker
 
         error_log("Auth token " . print_r($this->authToken, true));
 
+        $this->exportId = null;
         $this->scanId = "scanid1234";
     }
 
@@ -91,20 +92,22 @@ class PlagiarismChecker
         error_log("Webhook called");
         // error_log("Data passed to our webhook " . print_r($data, true));
 
-        $cwebhook = str_replace("export-id", $data['scannedDocument']['scanId'], self::COMPLETION_WEBHOOK_URL);
-        $model = new CopyleaksExportModel(
-            $cwebhook,
-            array(
-                new ExportResults($data['scannedDocument']['scanId'], self::RESULT_DOWNLOAD_URL, "POST")),
-            new ExportCrawledVersion(self::RESULT_DOWNLOAD_URL . "/export-webhook/crawled-version", "POST"),
-            new ExportPdfReport(self::RESULT_DOWNLOAD_URL, "POST")
-        );
+        $this->exportId = $data['scannedDocument']['scanId'] . rand(0, 10); // this should allow us export a result more than once
 
-        $exportedScanId = $data['scannedDocument']['scanId'];
+        str_replace("export-id", $this->exportId, self::COMPLETION_WEBHOOK_URL);
+        str_replace("export-id", $this->exportId, self::RESULT_DOWNLOAD_URL);
+        str_replace("export-id", $this->exportId, self::PDF_WEBHOOK_URL);
+
+        $model = new CopyleaksExportModel(
+            self::COMPLETION_WEBHOOK_URL,
+            array(new ExportResults($data['scannedDocument']['scanId'], self::RESULT_DOWNLOAD_URL, "POST")),
+            new ExportCrawledVersion(self::RESULT_DOWNLOAD_URL . "export-webhook/crawled-version", "POST"),
+            new ExportPdfReport(self::PDF_WEBHOOK_URL, "POST")
+        );
 
         error_log('webhook receieved....exporting....');
 
-        $this->copyleaks->export($authToken, $exportedScanId, $data['scannedDocument']['scanId'], $model);
+        $this->copyleaks->export($authToken, $this->exportId, $data['scannedDocument']['scanId'], $model);
 
         $request = $_SERVER['REQUEST_URI'];
 
@@ -121,6 +124,11 @@ class PlagiarismChecker
     public function download()
     {
         error_log("download called");
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        error_log('data sent to download endpoint' . print_r($data, true));
+
         $request = $_SERVER['REQUEST_URI'];
         error_log("download called with " . print_r($request, true));
 
