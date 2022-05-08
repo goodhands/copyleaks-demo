@@ -22,11 +22,11 @@ use Copyleaks\ExportCrawledVersion;
 use Copyleaks\ExportResults;
 use Copyleaks\ExportPdfReport;
 
-$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
+// $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
 
-if (file_exists(".env")) {
-    $dotenv->load();
-}
+// if (file_exists(".env")) {
+//     $dotenv->load();
+// }
 class PlagiarismChecker
 {
     public Copyleaks $copyleaks;
