@@ -93,17 +93,19 @@ class PlagiarismChecker
         error_log("Webhook called");
         // error_log("Data passed to our webhook " . print_r($data, true));
 
-        $this->exportId = $data['scannedDocument']['scanId'] . rand(0, 9); // this should allow us export a result more than once
+        $this->exportId = $data['scannedDocument']['scanId']; // this should allow us export a result more than once
 
-        str_replace("export-id", $this->exportId, self::COMPLETION_WEBHOOK_URL);
-        str_replace("export-id", $this->exportId, self::RESULT_DOWNLOAD_URL);
-        str_replace("export-id", $this->exportId, self::PDF_WEBHOOK_URL);
+        error_log('webhook receievd for scan id: ' . $this->exportId);
+
+        $completion_url = str_replace("export-id", $this->exportId, self::COMPLETION_WEBHOOK_URL);
+        $download_url = str_replace("export-id", $this->exportId, self::RESULT_DOWNLOAD_URL);
+        $pdf_url = str_replace("export-id", $this->exportId, self::PDF_WEBHOOK_URL);
 
         $model = new CopyleaksExportModel(
-            self::COMPLETION_WEBHOOK_URL,
-            array(new ExportResults($data['scannedDocument']['scanId'], self::RESULT_DOWNLOAD_URL, "POST")),
-            new ExportCrawledVersion(self::RESULT_DOWNLOAD_URL . "export-webhook/crawled-version", "POST"),
-            new ExportPdfReport(self::PDF_WEBHOOK_URL, "POST")
+            $completion_url,
+            array(new ExportResults($data['scannedDocument']['scanId'], $download_url . 'export-result', "POST")),
+            new ExportCrawledVersion($download_url . "export-webhook/crawled-version", "POST"),
+            new ExportPdfReport($pdf_url, "POST")
         );
 
         error_log('webhook receieved....exporting....');
@@ -125,6 +127,8 @@ class PlagiarismChecker
         error_log("download called");
 
         $data = json_decode(file_get_contents('php://input'), true);
+
+        error_log('Completed??? ' . $data['completed']);
 
         error_log('data sent to download endpoint' . print_r($data, true));
 
