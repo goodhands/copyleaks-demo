@@ -91,7 +91,7 @@ class PlagiarismChecker
         error_log("Webhook called");
         error_log("Data passed to our webhook " . print_r($data, true));
 
-        $cwebhook = str_replace("export-id", $data['id'], self::COMPLETION_WEBHOOK_URL);
+        $cwebhook = str_replace("export-id", $data['scannedDocument']['scanId'], self::COMPLETION_WEBHOOK_URL);
         $model = new CopyleaksExportModel(
             $cwebhook,
             array(new ExportResults("2a1b402420", self::RESULT_DOWNLOAD_URL_LOCAL . "/export-webhook/result/2a1b402420", "POST", array(array("key", "value")))),
@@ -99,7 +99,7 @@ class PlagiarismChecker
             new ExportPdfReport(self::RESULT_DOWNLOAD_URL_LOCAL, "POST", array())
         );
 
-        $exportedScanId = "abc";
+        $exportedScanId = $data['scannedDocument']['scanId'];
 
         $this->copyleaks->export($authToken, $exportedScanId, $exportedScanId, $model);
 
