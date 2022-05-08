@@ -1,5 +1,6 @@
-RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !-f
+Options +FollowSymLinks
+RewriteEngine On
+RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(./upload)$ /index.php?path=$1 [NC,L,QSA]
-RewriteRule ^(./webhook)$ /webhook.php?path=$1 [NC,L,QSA]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L]
