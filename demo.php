@@ -93,7 +93,7 @@ class PlagiarismChecker
         error_log("Webhook called");
         // error_log("Data passed to our webhook " . print_r($data, true));
 
-        $this->exportId = $data['scannedDocument']['scanId']; // this should allow us export a result more than once
+        $this->exportId = $data['scannedDocument']['scanId'] . rand(0, 9); // this should allow us export a result more than once
 
         error_log('webhook receievd for scan id: ' . $this->exportId);
 
