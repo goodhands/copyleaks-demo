@@ -110,6 +110,9 @@ class PlagiarismChecker
             'model' => $model,
             'request' => $request
         ));
+
+        // Send this to ensure we stop getting pinged!
+        return header("HTTP/1.1 200 OK");
     }
 
     public function download()
