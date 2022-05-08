@@ -23,7 +23,7 @@ if (strpos($url, 'downloads') !== false) {
 
     list($webhook, $status, $id) = explode("/", $path);
 
-    if ($status === 1) {
+    if ($status === 'completed') {
         error_log('webhook completed!');
         $class->webhook($class->authToken, $data);
     }

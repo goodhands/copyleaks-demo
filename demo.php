@@ -50,7 +50,7 @@ class PlagiarismChecker
 
         error_log("Auth token " . print_r($this->authToken, true));
 
-        $this->scanId = "scanid123";
+        $this->scanId = "scanid1234";
     }
 
     public function submit($filename, $url = false)
