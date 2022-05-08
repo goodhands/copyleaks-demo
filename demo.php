@@ -62,11 +62,11 @@ class PlagiarismChecker
         $file = base64_encode(file_get_contents('C:/Users/HP/Documents/School/Year 3/Psychotherapy/180904061 Assignment.pdf'));
         // error_log(substr(chunk_split($file), 0, 100));
         $submission = new CopyleaksFileSubmissionModel(
-            "aGVsbG8gd29ybGQ=",
+            "QnkgZGVmYXVsdCwgeW91ciBhcHAgaXMgZGVwbG95ZWQgb24gYSBmcmVlIGR5bm8uIEZyZWUgZHlub3Mgd2lsbCBzbGVlcCBhZnRlciBhIGhhbGYgaG91ciBvZiBpbmFjdGl2aXR5IChpZiB0aGV5IGRvbuKAmXQgcmVjZWl2ZSBhbnkgdHJhZmZpYykuIFRoaXMgY2F1c2VzIGEgZGVsYXkgb2YgYSBmZXcgc2Vjb25kcyBmb3IgdGhlIGZpcnN0IHJlcXVlc3QgdXBvbiB3YWtpbmcuIFN1YnNlcXVlbnQgcmVxdWVzdHMgd2lsbCBwZXJmb3JtIG5vcm1hbGx5LiBGcmVlIGR5bm9zIGFsc28gY29uc3VtZSBmcm9tIGEgbW9udGhseSwgYWNjb3VudC1sZXZlbCBxdW90YSBvZiBmcmVlIGR5bm8gaG91cnMgLSBhcyBsb25nIGFzIHRoZSBxdW90YSBpcyBub3QgZXhoYXVzdGVkLCBhbGwgZnJlZSBhcHBzIGNhbiBjb250aW51ZSB0byBydW4u",
             "assignment.pdf",
             new SubmissionProperties(
                 new SubmissionWebhooks(self::WEBHOOK_URL . "/{STATUS}/" . $this->scanId),
-                true, //include html (for PDFs yes)
+                false, //include html (for PDFs yes)
                 null, // developer payload: none for now
                 false, // sandbox
                 6, // hours before copyleaks deletes the scan
