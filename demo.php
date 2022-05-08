@@ -120,6 +120,8 @@ class PlagiarismChecker
 
             return header("HTTP/1.1 200 OK");
         }
+
+        return header("HTTP/1.1 200 OK");
     }
 
     public function download()
