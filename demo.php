@@ -2,6 +2,7 @@
 
 include_once 'vendor/autoload.php';
 
+use Copyleaks\CommandException;
 use Copyleaks\Copyleaks;
 use Copyleaks\SubmissionProperties;
 use Copyleaks\SubmissionWebhooks;
@@ -92,7 +93,7 @@ class PlagiarismChecker
         error_log("Webhook called");
         // error_log("Data passed to our webhook " . print_r($data, true));
 
-        $this->exportId = $data['scannedDocument']['scanId'] . rand(0, 10); // this should allow us export a result more than once
+        $this->exportId = $data['scannedDocument']['scanId'] . rand(0, 9); // this should allow us export a result more than once
 
         str_replace("export-id", $this->exportId, self::COMPLETION_WEBHOOK_URL);
         str_replace("export-id", $this->exportId, self::RESULT_DOWNLOAD_URL);
@@ -107,18 +108,16 @@ class PlagiarismChecker
 
         error_log('webhook receieved....exporting....');
 
-        $this->copyleaks->export($authToken, $this->exportId, $data['scannedDocument']['scanId'], $model);
+        try {
+            $this->copyleaks->export($authToken, $data['scannedDocument']['scanId'], $this->exportId, $model);
 
-        $request = $_SERVER['REQUEST_URI'];
 
-        echo json_encode(array(
-            'm' => 'o',
-            'model' => $model,
-            'request' => $request
-        ));
+            return header("HTTP/1.1 200 OK");
+        } catch (CommandException $ce) {
+            error_log("An error has occured with our scan. " . $ce->getMessage());
 
-        // Send this to ensure we stop getting pinged!
-        return header("HTTP/1.1 200 OK");
+            return header("HTTP/1.1 200 OK");
+        }
     }
 
     public function download()
