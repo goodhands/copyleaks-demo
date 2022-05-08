@@ -22,7 +22,8 @@ use Copyleaks\ExportCrawledVersion;
 use Copyleaks\ExportResults;
 use Copyleaks\ExportPdfReport;
 
-$dotenv = new \Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
+
 if (file_exists(".env")) {
     $dotenv->load();
 }

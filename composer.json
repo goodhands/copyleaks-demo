@@ -3,7 +3,9 @@
     "description": "A simple application showcasing copyleaks webhooks, file submission and scanning features",
     "type": "project",
     "require": {
-        "copyleaks/php-plagiarism-checker": "^3.1",
+        "copyleaks/php-plagiarism-checker": "^3.1"
+    },
+    "require-dev": {
         "vlucas/phpdotenv": "^5.4",
         "oscarotero/env": "^2.1"
     },
@@ -13,5 +15,5 @@
             "email": "olaegbesamuel@gmail.com"
         }
     ],
-    "minimum-stability": "alpha"
+    "minimum-stability": "stable"
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8406b064e7aaa0ef867c31fb0e0cb289",
+    "content-hash": "8e94f9c9a5dfeba1e2438b93c85ae7ce",
     "packages": [
         {
             "name": "copyleaks/php-plagiarism-checker",
@@ -52,12 +52,10 @@
                 "plagiarism",
                 "publisher"
             ],
-            "support": {
-                "issues": "https://github.com/Copyleaks/PHP-Plagiarism-Checker/issues",
-                "source": "https://github.com/Copyleaks/PHP-Plagiarism-Checker/tree/v3.1.0"
-            },
             "time": "2022-02-08T10:24:40+00:00"
-        },
+        }
+    ],
+    "packages-dev": [
         {
             "name": "graham-campbell/result-type",
             "version": "v1.0.4",
@@ -104,10 +102,6 @@
                 "Result-Type",
                 "result"
             ],
-            "support": {
-                "issues": "https://github.com/GrahamCampbell/Result-Type/issues",
-                "source": "https://github.com/GrahamCampbell/Result-Type/tree/v1.0.4"
-            },
             "funding": [
                 {
                     "url": "https://github.com/GrahamCampbell",
@@ -168,11 +162,6 @@
             "keywords": [
                 "env"
             ],
-            "support": {
-                "email": "oom@oscarotero.com",
-                "issues": "https://github.com/oscarotero/env/issues",
-                "source": "https://github.com/oscarotero/env/tree/v2.1.0"
-            },
             "time": "2020-06-11T10:59:27+00:00"
         },
         {
@@ -230,10 +219,6 @@
                 "php",
                 "type"
             ],
-            "support": {
-                "issues": "https://github.com/schmittjoh/php-option/issues",
-                "source": "https://github.com/schmittjoh/php-option/tree/1.8.1"
-            },
             "funding": [
                 {
                     "url": "https://github.com/GrahamCampbell",
@@ -309,9 +294,6 @@
                 "polyfill",
                 "portable"
             ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.25.0"
-            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -392,9 +374,6 @@
                 "portable",
                 "shim"
             ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.25.0"
-            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -475,9 +454,6 @@
                 "portable",
                 "shim"
             ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-php80/tree/v1.25.0"
-            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -558,10 +534,6 @@
                 "env",
                 "environment"
             ],
-            "support": {
-                "issues": "https://github.com/vlucas/phpdotenv/issues",
-                "source": "https://github.com/vlucas/phpdotenv/tree/v5.4.1"
-            },
             "funding": [
                 {
                     "url": "https://github.com/GrahamCampbell",
@@ -575,13 +547,12 @@
             "time": "2021-12-12T23:22:04+00:00"
         }
     ],
-    "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "alpha",
+    "minimum-stability": "stable",
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "1.1.0"
 }
