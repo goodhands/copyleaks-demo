@@ -36,11 +36,11 @@ class PlagiarismChecker
 
     private const WEBHOOK_URL = "https://copyleaks.herokuapp.com/webhook";
     private const RESULT_DOWNLOAD_URL = "https://copyleaks.herokuapp.com/download/";
-    private const RESULT_DOWNLOAD_URL_LOCAL = "http://copyleaks.test/download/";
-    private const WEBHOOK_URL_LOCAL = "http://copyleaks.test/webhook/";
-    private const COMPLETION_WEBHOOK_URL = "http://copyleaks.herokuapp.com/export/export-id/completed";
-    private const CRAWLED_WEBHOOK_URL = "http://copyleaks.herokuapp.com/export/export-id/crawled-version";
-    private const PDF_WEBHOOK_URL = "http://copyleaks.herokuapp.com/export/export-id/pdf-report";
+    private const RESULT_DOWNLOAD_URL_LOCAL = "https://copyleaks.test/download/";
+    private const WEBHOOK_URL_LOCAL = "https://copyleaks.test/webhook/";
+    private const COMPLETION_WEBHOOK_URL = "https://copyleaks.herokuapp.com/export/export-id/completed";
+    private const CRAWLED_WEBHOOK_URL = "https://copyleaks.herokuapp.com/export/export-id/crawled-version";
+    private const PDF_WEBHOOK_URL = "https://copyleaks.herokuapp.com/export/export-id/pdf-report";
 
     public function __construct()
     {
@@ -135,6 +135,8 @@ class PlagiarismChecker
         error_log('data sent to download endpoint' . print_r($data, true));
 
         if (strpos($request, 'pdf-report') !== false) {
+            error_log('data sent to pdf endpoint' . print_r($_POST, true));
+
             error_log("download called");
 
             error_log('Completed??? ' . isset($data['completed']));
