@@ -132,14 +132,15 @@ class PlagiarismChecker
         error_log("download called with " . print_r($request, true));
 
         $data = json_decode(file_get_contents('php://input'), true);
-        error_log('data sent to download endpoint' . print_r($data, true));
+        // error_log('data sent to download endpoint' . print_r($data, true));
 
         if (strpos($request, 'pdf-report') !== false) {
-            error_log('data sent to pdf endpoint' . print_r(array($_POST, $_FILES), true));
+            $headers = get_headers($_SERVER['REQUEST_URI']);
+            error_log('data sent to pdf endpoint' . print_r(array('post' => $_POST, 'files' => $_FILES, 'headers' => $headers), true));
 
             error_log("download called");
 
-            error_log('Completed??? ' . isset($data['completed']));
+            error_log('Completed??? ' . (int) isset($data['completed']));
 
             error_log("download called with " . print_r($request, true));
 
