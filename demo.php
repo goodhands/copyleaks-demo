@@ -135,7 +135,7 @@ class PlagiarismChecker
         error_log('data sent to download endpoint' . print_r($data, true));
 
         if (strpos($request, 'pdf-report') !== false) {
-            error_log('data sent to pdf endpoint' . print_r($_POST, true));
+            error_log('data sent to pdf endpoint' . print_r(array($_POST, $_FILES), true));
 
             error_log("download called");
 
