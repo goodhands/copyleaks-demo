@@ -91,6 +91,7 @@ class PlagiarismChecker
     public function webhook(CopyleaksAuthToken $authToken, $data)
     {
         error_log("Webhook called");
+        // $data make sone decisions with this
         // error_log("Data passed to our webhook " . print_r($data, true));
 
         $this->exportId = $data['scannedDocument']['scanId'] . rand(0, 9); // this should allow us export a result more than once
@@ -126,18 +127,20 @@ class PlagiarismChecker
 
     public function download()
     {
-        if (strpos($_SERVER['REQUEST_URI'], 'pdf-report') !== false) {
+        $request = $_SERVER['REQUEST_URI'];
+
+        error_log("download called with " . print_r($request, true));
+
+        $data = json_decode(file_get_contents('php://input'), true);
+        error_log('data sent to download endpoint' . print_r($data, true));
+
+        if (strpos($request, 'pdf-report') !== false) {
             error_log("download called");
 
-            $data = json_decode(file_get_contents('php://input'), true);
-    
             error_log('Completed??? ' . isset($data['completed']));
-    
-            error_log('data sent to download endpoint' . print_r($data, true));
 
-            $request = $_SERVER['REQUEST_URI'];
             error_log("download called with " . print_r($request, true));
-    
+
             echo json_encode(array(
                 'request' => $request
             ));
