@@ -14,7 +14,7 @@ if ($url === $class::COMPLETION_WEBHOOK_URL) {
     $this->retry(array($this, 'export_completed_webhook'), $data);
 } elseif ($url === $class::WEBHOOK_URL) {
     $this->retry(array($this, 'scan_completed_webhook'), $data);
-} elseif ($url === self::PDF_WEBHOOK_URL) {
+} elseif ($url === $class::PDF_WEBHOOK_URL) {
     $this->retry(array($this, 'download_pdf_webhook'), $data);
 } elseif (strpos($url, 'submit') !== false) {
     error_log('submit endpoint');
