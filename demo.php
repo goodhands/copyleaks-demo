@@ -37,13 +37,13 @@ class PlagiarismChecker
     private string $scanId;
     private int $tries;
 
-    private const WEBHOOK_URL = "https://copyleaks.herokuapp.com/webhook";
-    private const RESULT_DOWNLOAD_URL = "https://copyleaks.herokuapp.com/download/";
+    public const WEBHOOK_URL = "https://copyleaks.herokuapp.com/webhook";
+    public const RESULT_DOWNLOAD_URL = "https://copyleaks.herokuapp.com/download/";
     private const RESULT_DOWNLOAD_URL_LOCAL = "https://copyleaks.test/download/";
     private const WEBHOOK_URL_LOCAL = "https://copyleaks.test/webhook/";
-    private const COMPLETION_WEBHOOK_URL = "https://copyleaks.herokuapp.com/export/export-id/completed";
+    public const COMPLETION_WEBHOOK_URL = "https://copyleaks.herokuapp.com/export/export-id/completed";
     private const CRAWLED_WEBHOOK_URL = "https://copyleaks.herokuapp.com/export/export-id/crawled-version";
-    private const PDF_WEBHOOK_URL = "https://copyleaks.herokuapp.com/export/export-id/pdf-report";
+    public const PDF_WEBHOOK_URL = "https://copyleaks.herokuapp.com/export/export-id/pdf-report";
 
     private const MAX_RETRIES = 64;
 
