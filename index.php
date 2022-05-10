@@ -12,13 +12,16 @@ $url = $_SERVER['REQUEST_URI'];
 if (strpos($url, 'download') !== false) {
     list($id, $filename) = explode("/", $path);
     error_log('download endpoint');
-    $class->download();
+
+    $class->retry(array($class, 'download'));
 } elseif (strpos($url, 'submit') !== false) {
     error_log('submit endpoint');
-    $class->submit(true, true);
+
+    $class->retry(array($class, 'submit'), true);
 } elseif (strpos($url, 'export') !== false) {
     error_log('submit endpoint');
-    $class->download(true, true);
+
+    $class->retry(array($class, 'download'));
 } elseif (strpos($url, 'webhook') !== false) {
     error_log('webhook pinged!');
 
@@ -27,6 +30,7 @@ if (strpos($url, 'download') !== false) {
     list($webhook, $status, $id) = explode("/", $path);
 
     if ($status === 'completed') {
-        $class->webhook($class->authToken, $data);
+        $class->retry(array($class, 'webhook'), $data);
+        // $class->webhook($data);
     }
 }
