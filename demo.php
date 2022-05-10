@@ -107,7 +107,7 @@ class PlagiarismChecker
 
     public function retry(callable $method, $params = array())
     {
-        error_log('Called retry method on ' . $method);
+        error_log('Called retry method on ' . print_r($method, true) . ' with params ' . print_r($params, true));
 
         try {
             $this->tries *= 2;
@@ -115,6 +115,9 @@ class PlagiarismChecker
         } catch (Exception $th) {
             // If this is not the exception we expect then just quit.
             if (!in_array(get_class($th), $this->backOffExceptions)) {
+
+                error_log('Not the exception we expect....' . get_class($th));
+
                 throw $th;
             }
 
@@ -125,6 +128,8 @@ class PlagiarismChecker
                 $next_try =  $this->tries + $this->retry_in;
 
                 sleep($next_try);
+
+                error_log('Slept for ' . $next_try . 'seconds, trying again...');
 
                 $this->retry($method);
             }
