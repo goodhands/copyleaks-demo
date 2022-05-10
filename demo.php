@@ -105,10 +105,11 @@ class PlagiarismChecker
         echo "Submitted successfully!";
     }
 
+    /**
+     * Exponential Backoff algorithm based on https://api.copyleaks.com/documentation/v3/exponential-backoff
+     */
     public function retry(callable $method, $params = array())
     {
-        error_log('Called retry method on ' . print_r($method, true) . ' with params ' . print_r($params, true));
-
         try {
             $this->tries *= 2;
             return call_user_func($method, $params);
@@ -129,8 +130,6 @@ class PlagiarismChecker
 
                 sleep($next_try);
 
-                error_log('Slept for ' . $next_try . 'seconds, trying again...');
-
                 $this->retry($method);
             }
 
@@ -138,9 +137,8 @@ class PlagiarismChecker
             throw $th;
         }
     }
-    public function webhook($data)
+    public function scan_completed_webhook($data)
     {
-        error_log("Webhook called");
         // $data make sone decisions with this
         // error_log("Data passed to our webhook " . print_r($data, true));
 
@@ -155,7 +153,7 @@ class PlagiarismChecker
 
         $model = new CopyleaksExportModel(
             $completion_url,
-            array(new ExportResults($data['results']['internet'], $download_url . 'export-result', "POST")),
+            array(new ExportResults($data['results']['internet']['id'], $download_url . 'export-result', "POST")),
             new ExportCrawledVersion($download_url . "export-webhook/crawled-version", "POST"),
             new ExportPdfReport($pdf_url, "POST")
         );
@@ -167,28 +165,13 @@ class PlagiarismChecker
         return header("HTTP/1.1 200 OK");
     }
 
-    public function download()
+    public function export_completed_webhook($data)
     {
-        $request = $_SERVER['REQUEST_URI'];
+        error_log('Data passed when export completed ' . print_r($data, true));
+    }
 
-        error_log("download called with " . print_r($request, true));
-
-        $data = json_decode(file_get_contents('php://input'), true);
-        // error_log('data sent to download endpoint' . print_r($data, true));
-
-        if (strpos($request, 'pdf-report') !== false) {
-            $headers = get_headers($_SERVER['REQUEST_URI']);
-            error_log('data sent to pdf endpoint' . print_r(array('post' => $_POST, 'files' => $_FILES, 'headers' => $headers), true));
-
-            error_log("download called");
-
-            error_log('Completed??? ' . (int) isset($data['completed']));
-
-            error_log("download called with " . print_r($request, true));
-
-            echo json_encode(array(
-                'request' => $request
-            ));
-        }
+    public function download_pdf_webhook($data)
+    {
+        error_log('Data passed when pdf download called ' . print_r($data, true));
     }
 }
