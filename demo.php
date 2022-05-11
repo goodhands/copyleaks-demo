@@ -141,10 +141,10 @@ class PlagiarismChecker
         // error_log("Data passed to our webhook " . print_r($data, true));
         $this->url =  $_SERVER['REQUEST_URI'];
         $url = explode("/", $this->url);
-		$status = $url[2];
+		$status = $url[0];
 
-		error_log("Status for scan completed webhook is " . $status);
-		error_log("Internet Result is " . print_r($data['results']['internet'], true));
+		error_log("URL breakdown for scan completed is " . print_r($url, true));
+		error_log("Data passed to scan completed webhook is " . print_r($data, true));
 
         // this should allow us export a result more than once while testing
         $this->exportId = $data['scannedDocument']['scanId'] . rand(0, 9);
@@ -169,6 +169,10 @@ class PlagiarismChecker
         return header("HTTP/1.1 200 OK");
     }
 
+    /**
+     * This purely tells us the endpoints we defined and 
+     * if Copyleaks was able to access them
+     */
     public function export_completed_webhook($data)
     {
         error_log('Data passed when export completed ' . print_r($data, true));
