@@ -139,7 +139,7 @@ class PlagiarismChecker
     {
         // $data make sone decisions with this
         // error_log("Data passed to our webhook " . print_r($data, true));
-
+        $this->url =  $_SERVER['REQUEST_URI'];
         $url = explode("/", $this->url);
 		$status = $url[1];
 
