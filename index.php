@@ -24,7 +24,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 // Respond to export completed, but not webhook completed status
 if (strpos($url, "completed") !== false && strpos($url, "webhook") === false) {
     $class->retry(array($class, 'export_completed_webhook'), $data);
-} elseif (strpos($url, "webhook") !== false) {
+} elseif (strpos($url, "webhook") !== false && strpos($url, "download") !== false) {
     $class->retry(array($class, 'scan_completed_webhook'), $data);
 } elseif (strpos($url, "pdf-report") !== false) {
     $class->retry(array($class, 'download_pdf_webhook'), $data);
