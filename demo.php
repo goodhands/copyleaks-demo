@@ -144,6 +144,7 @@ class PlagiarismChecker
 		$status = $url[2];
 
         if ($status && $status !== "completed") {
+            error_log("Status is " . $status . " quitting.....");
             return;
         }
 
