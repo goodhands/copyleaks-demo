@@ -147,7 +147,7 @@ class PlagiarismChecker
 
         if ($status && $status !== "completed") {
             error_log("Status is " . $status . " quitting.....");
-            // return;
+            return;
         }
 
 		error_log("Data passed to scan completed webhook is " . print_r($data, true));
