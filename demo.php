@@ -39,8 +39,6 @@ class PlagiarismChecker
 
     public const WEBHOOK_URL = "https://copyleaks.herokuapp.com/webhook";
     public const RESULT_DOWNLOAD_URL = "https://copyleaks.herokuapp.com/download/";
-    private const RESULT_DOWNLOAD_URL_LOCAL = "https://copyleaks.test/download/";
-    private const WEBHOOK_URL_LOCAL = "https://copyleaks.test/webhook/";
     public const COMPLETION_WEBHOOK_URL = "https://copyleaks.herokuapp.com/export/export-id/completed";
     private const CRAWLED_WEBHOOK_URL = "https://copyleaks.herokuapp.com/export/export-id/crawled-version";
     public const PDF_WEBHOOK_URL = "https://copyleaks.herokuapp.com/export/export-id/pdf-report";
@@ -142,6 +140,11 @@ class PlagiarismChecker
         // $data make sone decisions with this
         // error_log("Data passed to our webhook " . print_r($data, true));
 
+        $url = explode("/", $this->url);
+		$status = $url[1];
+
+		error_log("Status for scan completed webhook is " . $status);
+
         // this should allow us export a result more than once while testing
         $this->exportId = $data['scannedDocument']['scanId'] . rand(0, 9);
 
@@ -173,5 +176,10 @@ class PlagiarismChecker
     public function download_pdf_webhook($data)
     {
         error_log('Data passed when pdf download called ' . print_r($data, true));
+    }
+
+    public function download($data)
+    {
+        error_log('Data passed when completed download webhook is called ' . print_r($data, true));
     }
 }

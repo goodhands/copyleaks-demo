@@ -10,17 +10,30 @@ $path = ltrim($endpoint['path'], "/");
 $url = $_SERVER['REQUEST_URI'];
 $data = json_decode(file_get_contents('php://input'), true);
 
-if ($url === $class::COMPLETION_WEBHOOK_URL) {
+// if ($url === $class::COMPLETION_WEBHOOK_URL) {
+//     $this->retry(array($this, 'export_completed_webhook'), $data);
+// } elseif ($url === $class::WEBHOOK_URL) {
+//     $this->retry(array($this, 'scan_completed_webhook'), $data);
+// } elseif ($url === $class::PDF_WEBHOOK_URL) {
+//     $this->retry(array($this, 'download_pdf_webhook'), $data);
+// } elseif (strpos($url, 'submit') !== false) {
+//     error_log('submit endpoint');
+//     $class->retry(array($class, 'submit'), true);
+// }
+
+// Respond to export completed, but not webhook completed status
+if (strpos($url, "completed") !== false && strpos($url, "webhook") === false) {
     $this->retry(array($this, 'export_completed_webhook'), $data);
-} elseif ($url === $class::WEBHOOK_URL) {
+} elseif (strpos($url, "webhook") !== false) {
     $this->retry(array($this, 'scan_completed_webhook'), $data);
-} elseif ($url === $class::PDF_WEBHOOK_URL) {
+} elseif (strpos($url, "pdf-report") !== false) {
     $this->retry(array($this, 'download_pdf_webhook'), $data);
+} elseif (strpos($url, "download") !== false) {
+    $this->retry(array($this, 'download'), $data);
 } elseif (strpos($url, 'submit') !== false) {
     error_log('submit endpoint');
     $class->retry(array($class, 'submit'), true);
 }
-
 // if (strpos($url, 'download')  !== false) {
 //     list($id, $filename) = explode("/", $path);
 //     error_log('download endpoint');
