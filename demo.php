@@ -143,12 +143,13 @@ class PlagiarismChecker
         $url = explode("/", $this->url);
 		$status = $url[2];
 
+        error_log("URL breakdown for scan completed is " . print_r($url, true));
+
         if ($status && $status !== "completed") {
             error_log("Status is " . $status . " quitting.....");
             return;
         }
 
-		error_log("URL breakdown for scan completed is " . print_r($url, true));
 		error_log("Data passed to scan completed webhook is " . print_r($data, true));
 
         $plagiarismBreakdown = $data['results']['score'];
