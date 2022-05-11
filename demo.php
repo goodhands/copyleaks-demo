@@ -141,9 +141,10 @@ class PlagiarismChecker
         // error_log("Data passed to our webhook " . print_r($data, true));
         $this->url =  $_SERVER['REQUEST_URI'];
         $url = explode("/", $this->url);
-		$status = $url[1];
+		$status = $url[2];
 
 		error_log("Status for scan completed webhook is " . $status);
+		error_log("Internet Result is " . print_r($data['results']['internet'], true));
 
         // this should allow us export a result more than once while testing
         $this->exportId = $data['scannedDocument']['scanId'] . rand(0, 9);
@@ -156,7 +157,7 @@ class PlagiarismChecker
 
         $model = new CopyleaksExportModel(
             $completion_url,
-            array(new ExportResults($data['results']['internet']['id'], $download_url . 'export-result', "POST")),
+            array(new ExportResults("idpr", $download_url . 'export-result', "POST")),
             new ExportCrawledVersion($download_url . "export-webhook/crawled-version", "POST"),
             new ExportPdfReport($pdf_url, "POST")
         );
